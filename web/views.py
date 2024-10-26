@@ -16,7 +16,14 @@ brt = boto3.client("bedrock-runtime")
 oldtime = 0
 
 
-@ensure_csrf_cookie
+def index(request):
+    return render(request, "index.html")
+
+
+def menu(request):
+    return render(request, "menu.html")
+
+
 def callScreen(request):
     if request.method == "GET":
         return render(request, "call-screen.html")
@@ -24,7 +31,6 @@ def callScreen(request):
         return JsonResponse({"response": callAnalysis(request.POST.get("message"))})
 
 
-@csrf_exempt
 def callAnalysis(message):
     global oldtime
     if not oldtime:
